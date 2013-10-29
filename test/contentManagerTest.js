@@ -16,6 +16,7 @@ Object.defineProperty(Image.prototype, 'src', {
     this._src = value;
     setTimeout(function() {
       if (loadWorks) {
+        this.loaded = true;
         this.fireEvent('load');
       } else {
         this.fireEvent('error');
@@ -27,18 +28,25 @@ Object.defineProperty(Image.prototype, 'src', {
 
 test('successful load', function(assert) {
   loadWorks = true;
-  var cm = ContentManager();
+  var cm = new ContentManager();
   cm.on('done', function() {
+    assert.ok(img1a.loaded, 'img1 is loaded');
+    assert.ok(img2.loaded, 'img2 is loaded');
     assert.end();
   });
-  cm.getImage('http://wat.com/img');
+  var img1a = cm.getImage('http://wat.com/img1');
+  var img1b = cm.getImage('http://wat.com/img1');
+  var img2 = cm.getImage('http://wat.com/img2');
+
+  assert.ok(img1a === img1b, 'same url returns same image');
 });
 
 test('error loading', function(assert) {
   loadWorks = false;
-  var cm = ContentManager();
+  var cm = new ContentManager();
   cm.on('error', function() {
+    assert.notOk(img.loaded);
     assert.end();
   });
-  cm.getImage('http://wat.com/img');
+  var img = cm.getImage('http://wat.com/img');
 });
