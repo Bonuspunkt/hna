@@ -33,3 +33,16 @@ test('on un fire works', function(assert) {
 
   assert.end();
 });
+
+test('once', function(assert) {
+  var emitter = new Emitter();
+
+  var fired = 0;
+  emitter.once('a', function() { fired++; });
+
+  emitter.fireEvent('a');
+  emitter.fireEvent('a');
+
+  assert.equal(fired, 1);
+  assert.end();
+})
