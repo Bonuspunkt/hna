@@ -32,6 +32,7 @@ test('successful load', function(assert) {
   cm.on('done', function() {
     assert.ok(img1a.loaded, 'img1 is loaded');
     assert.ok(img2.loaded, 'img2 is loaded');
+    assert.ok(cm.done);
     assert.end();
   });
   var img1a = cm.getImage('http://wat.com/img1');
@@ -45,6 +46,7 @@ test('error loading', function(assert) {
   loadWorks = false;
   var cm = new ContentManager();
   cm.on('error', function() {
+    assert.notOk(cm.done);
     assert.notOk(img.loaded);
     assert.end();
   });
