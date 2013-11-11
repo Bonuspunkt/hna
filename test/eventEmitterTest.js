@@ -45,4 +45,12 @@ test('once', function(assert) {
 
   assert.equal(fired, 1);
   assert.end();
+});
+
+test('eventname casing is ignored', function(assert) {
+  assert.plan(1);
+  var emitter = new Emitter();
+  emitter.on('FiRe', function() { assert.ok(true); });
+  emitter.fireEvent('fIrE');
+  assert.end();
 })
