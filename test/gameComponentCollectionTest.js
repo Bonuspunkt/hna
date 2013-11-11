@@ -6,7 +6,7 @@ var DrawableGameComponent = require('../lib/drawableGameComponent');
 var test = require('tap').test;
 
 
-test('drawComponents should work be sorted', function(assert) {
+test('drawComponents should work and be sorted', function(assert) {
 
   var collection = new GameComponentCollection();
 
@@ -38,7 +38,7 @@ test('drawComponents should work be sorted', function(assert) {
   assert.end();
 });
 
-test('updateComponents should work be sorted', function(assert) {
+test('updateComponents should work and be sorted', function(assert) {
   var collection = new GameComponentCollection();
 
   var gameComponent1 = new GameComponent();
@@ -63,6 +63,35 @@ test('updateComponents should work be sorted', function(assert) {
   actual = collection.updateComponents;
   expected = [gameComponent1];
   assert.deepEqual(actual, expected);
+
+  assert.end();
+});
+
+test('add and remove should fire events', function(assert) {
+  var collection = new GameComponentCollection();
+  var gameComponent = new GameComponent();
+
+  var addFired = false;
+  var removeFired = false;
+
+  collection.on('componentAdd', function(component) {
+    assert.equal(component, gameComponent);
+    addFired = true;
+  });
+  collection.on('componentRemove', function(component) {
+    assert.equal(component, gameComponent);
+    removeFired = true;
+  });
+
+
+  collection.add(gameComponent);
+
+  assert.ok(addFired, 'add has been fired');
+  assert.notOk(removeFired, 'remove has been fired');
+
+  collection.remove(gameComponent);
+
+  assert.ok(removeFired);
 
   assert.end();
 });
