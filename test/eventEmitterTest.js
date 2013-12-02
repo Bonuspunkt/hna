@@ -54,3 +54,13 @@ test('eventname casing is ignored', function(assert) {
   emitter.fireEvent('fIrE');
   assert.end();
 })
+
+test('once and on', function(assert) {
+  assert.plan(2);
+  var emitter = new Emitter();
+  emitter.once('fire', function() { assert.ok(true); });
+  emitter.on('fire', function() { assert.ok(true); });
+  emitter.fireEvent('fire');
+
+  assert.end();
+})
