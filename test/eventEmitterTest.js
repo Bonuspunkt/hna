@@ -5,7 +5,7 @@ var Emitter = require('../lib/eventEmitter');
 
 test('on un fire works', function(assert) {
 
-  assert.plan(7);
+  assert.plan(8);
 
   var emitter = new Emitter();
 
@@ -24,6 +24,7 @@ test('on un fire works', function(assert) {
   assert.notOk(emitter.un('fire', shouldNotBeFired), 'should return false');
 
   emitter.on('fire', function(a, b, c) {
+    assert.equal(this, emitter);
     assert.equal(a, 1, 'should be first passed value');
     assert.equal(b, 2, 'should be second passed value');
     assert.equal(c, 3, 'should be thrid passed value');
