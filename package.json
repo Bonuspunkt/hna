@@ -1,22 +1,22 @@
 {
   "name": "hna",
-  "version": "0.0.0",
+  "version": "0.1.0",
+  "type": "module",
   "description": "xna'ish port to html5",
   "main": "index.js",
   "directories": {
     "test": "test"
   },
-  "dependencies": {},
-  "devDependencies": {
-    "tap": "~0.4.4"
-  },
   "scripts": {
-    "test": "tap test/*.js"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/Bonuspunkt/hna.git"
   },
   "author": "Bonuspunkt",
-  "license": "BSD"
+  "license": "BSD",
+  "devDependencies": {
+    "jest": "^29.3.1"
+  }
 }
