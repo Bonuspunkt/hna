@@ -1,9 +1,9 @@
 {
   "name": "hna",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "type": "module",
   "description": "xna'ish port to html5",
-  "main": "src/index.js",
+  "main": "build/module.js",
   "scripts": {
     "build": "rollup --config rollup.config.js",
     "test": "jest"
