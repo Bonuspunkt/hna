@@ -1,19 +1,21 @@
 class EventEmitter {
+  #events;
 
   constructor() {
-    this.events = {};
+    this.#events = {};
   }
 
   addEventListener(name, fn) {
     name = String(name).toLowerCase();
-    this.events[name] = this.events[name] || [];
-    this.events[name].push(fn);
+    this.#events[name] = this.#events[name] || [];
+    this.#events[name].push(fn);
   }
 
   removeEventListener(name, fn) {
     name = String(name).toLowerCase();
-    var eventHandlers = this.events[name] || [];
-    var index = eventHandlers.indexOf(fn);
+    const eventHandlers = this.#events[name];
+    if (!eventHandlers) { return false; }
+    const index = eventHandlers.indexOf(fn);
     if (index === -1) { return false; }
     eventHandlers.splice(index, 1);
     return true;
@@ -21,19 +23,17 @@ class EventEmitter {
 
   fireEvent(name) {
     name = String(name).toLowerCase();
-    var args = [].slice.call(arguments, 1);
-    var eventHandlers = (this.events[name] || []).slice();
-    eventHandlers.forEach(function (handler) {
-      handler.apply(this, args);
-    }, this);
+    const args = [].slice.call(arguments, 1);
+    const eventHandlers = (this.#events[name] || []).slice();
+    eventHandlers.forEach(handler => handler.apply(this, args));
   };
 
   once(name, fn) {
     name = String(name).toLowerCase();
-    var fireAndForget = function () {
+    const fireAndForget = () => {
       this.un(name, fireAndForget);
       fn.apply(this, arguments);
-    }.bind(this);
+    };
 
     this.on(name, fireAndForget);
   }

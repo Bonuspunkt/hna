@@ -1,13 +1,11 @@
 {
   "name": "hna",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "description": "xna'ish port to html5",
-  "main": "index.js",
-  "directories": {
-    "test": "test"
-  },
+  "main": "src/index.js",
   "scripts": {
+    "build": "rollup --config rollup.config.js",
     "test": "jest"
   },
   "repository": {
@@ -17,6 +15,7 @@
   "author": "Bonuspunkt",
   "license": "BSD",
   "devDependencies": {
-    "jest": "^29.3.1"
+    "jest": "^29.3.1",
+    "rollup": "^3.5.1"
   }
 }

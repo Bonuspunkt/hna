@@ -14,22 +14,25 @@ test('fire', () => {
   emitter.fireEvent('fire', 1, 2, 3);
 });
 
-test('on un fire works', () => {
+test('on un', () => {
   const emitter = new Emitter();
 
-  const shouldNotBeFired = jest.fn();
+  const shouldNotBeCalled = jest.fn();
+  const shouldBeCalled = jest.fn();
 
-  emitter.on('fire', shouldNotBeFired);
+  emitter.on('fire', shouldNotBeCalled);
+  emitter.on('fire', shouldBeCalled)
 
-  expect(emitter.events.fire.length).toBe(1);
+  expect(emitter.un('fire', shouldNotBeCalled)).toBe(true);
 
-  expect(emitter.un('fire', shouldNotBeFired)).toBeTruthy();
+  expect(emitter.un('fire', shouldNotBeCalled)).toBe(false);
 
-  expect(emitter.events.fire.length).toBe(0);
+  emitter.fireEvent('fire');
 
-  expect(emitter.un('fire', shouldNotBeFired)).toBeFalsy();
+  expect(shouldNotBeCalled).not.toBeCalled();
+  expect(shouldBeCalled).toBeCalledTimes(1);
 
-  expect(shouldNotBeFired).not.toBeCalled();
+  expect(emitter.un('event', () => { })).toBe(false);
 });
 
 

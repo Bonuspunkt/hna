@@ -14,30 +14,30 @@ class GameComponentCollection extends EventEmitter {
 
   add(component) {
     if (component instanceof DrawableGameComponent) {
-      component.on('drawOrderChange', this.queueDrawRebuild);
-      component.on('visibleChange', this.queueDrawRebuild);
+      component.on('drawOrderChanged', this.queueDrawRebuild);
+      component.on('visibleChanged', this.queueDrawRebuild);
     }
-    component.on('enabledChange', this.queueUpdateRebuild);
-    component.on('updateOrderChange', this.queueUpdateRebuild);
+    component.on('enabledChanged', this.queueUpdateRebuild);
+    component.on('updateOrderChanged', this.queueUpdateRebuild);
 
     this.#components.push(component);
 
-    this.fireEvent('componentAdd', component);
+    this.fireEvent('componentAdded', component);
   };
   remove(component) {
     const index = this.#components.indexOf(component);
     if (index === -1) { return; }
 
     if (component instanceof DrawableGameComponent) {
-      component.un('drawOrderChange', this.queueDrawRebuild);
-      component.un('visibleChange', this.queueDrawRebuild);
+      component.un('drawOrderChanged', this.queueDrawRebuild);
+      component.un('visibleChanged', this.queueDrawRebuild);
     }
-    component.un('enabledChange', this.queueUpdateRebuild);
-    component.un('updateOrderChange', this.queueUpdateRebuild);
+    component.un('enabledChanged', this.queueUpdateRebuild);
+    component.un('updateOrderChanged', this.queueUpdateRebuild);
 
     this.#components.splice(index, 1);
 
-    this.fireEvent('componentRemove', component);
+    this.fireEvent('componentRemoved', component);
   };
 
   #drawComponents;
